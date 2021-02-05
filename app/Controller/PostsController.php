@@ -38,5 +38,41 @@ class PostsController extends AppController{
 		}
 	}
 
+	public function edit($id = null){
+
+		if( ! $id ){
+			throw new NotFoundException(__("Invalid Post"));
+		}
+		$post = $this->Post->findById($id);
+
+		if( ! $post ){
+			throw new NotFoundException(__("Invalid Post"));
+		}
+
+		if( $this->request->is('put') ){
+			$this->Post->id = $id;
+			if( $this->Post->save($this->request->data) ){
+				$this->Flash->success(__("Post Edited Successfully"));
+				return $this->redirect( array( 'action' => 'view', $id) );
+			}
+			$this->Flash->error(__('Unable ot update the post'));
+		}
+		if( ! $this->request->data ){
+			$this->request->data = $post;
+		}
+	}
+
+	public function delete($id = null){
+		if( $this->request->is('get') ){
+			throw new MethodNotAllowedException(__("Method Not Allowed"));
+		}
+
+		if( ! $this->Post->delete($id) ){
+			$this->Flash->error(__('Unable to delete the post'));
+		}
+		$this->Flash->success(__('Post Deleted Successfully'));
+		return $this->redirect(array('action' => 'index'));
+	}
+
 
 }
