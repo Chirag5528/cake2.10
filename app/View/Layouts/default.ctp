@@ -99,9 +99,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 		<div class="md:mt-12 md:w-48 md:fixed md:left-0 md:top-4 content-center md:content-start text-left justify-between">
 			<div class="title text-2xl text-white px-2"><?php echo $this->fetch('title'); ?></div>
-			<?= $this->element('sidebar', array(
+			<?= $this->element('Sidebar/sidebar', array(
 					"routes" => array('Posts','Users')),
-					array('cache' => true)); ?>
+					array('cache' => array( 'config' => 'short' ))); ?>
 		</div>
 
 

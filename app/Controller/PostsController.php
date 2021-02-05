@@ -1,8 +1,17 @@
 <?php
 class PostsController extends AppController{
 
-	public $components = array('Flash');
+	public $components = array('Flash','Security' => array(
+		'csrfExpires' => '+1 hour'
+	),);
 	public $helpers = array('Html','Form','Flash');
+
+	public function beforeFilter()
+	{
+		parent::beforeFilter();
+		$this->Security->csrfExpires = '+1 hour';
+		$this->Security->unlockedActions = array('edit');
+	}
 
 	public function index(){
 		$this->set('posts',$this->Post->find('all'));
@@ -44,7 +53,6 @@ class PostsController extends AppController{
 			throw new NotFoundException(__("Invalid Post"));
 		}
 		$post = $this->Post->findById($id);
-
 		if( ! $post ){
 			throw new NotFoundException(__("Invalid Post"));
 		}
@@ -59,6 +67,7 @@ class PostsController extends AppController{
 		}
 		if( ! $this->request->data ){
 			$this->request->data = $post;
+			$this->set('post',$post['Post']);
 		}
 	}
 

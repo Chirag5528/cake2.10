@@ -1,4 +1,5 @@
 <?php
+$this->assign('title', 'Edit '. $post['title']);
 echo $this->Form->create('Post');
 echo $this->Form->input('title', array( 'class' => 'mb-4 px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full' ));
 echo $this->Form->input('body', array('rows' => '3','class' => 'px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full'));
