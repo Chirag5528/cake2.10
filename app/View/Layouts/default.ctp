@@ -38,8 +38,17 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<meta name="author" content="Chirag Arora">
 	<meta name="description" content="A cake php project completely made for learning cakephp 2">
 	<meta name="keywords" content="Cakephp, Php, Tailwind, HTML, CSS, Javascript">
+	<?php echo $this->Html->css(captcha_layout_stylesheet_url(), array('inline' => false)) ?>
+
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> <!--Replace with your tailwind.css once created-->
+	<style>
+		.captcha .BDC_CaptchaIconsDiv{
+			display:flex;
+			justify-content: space-between;
+			width:100px !important;
+		}
+	</style>
 </head>
 
 

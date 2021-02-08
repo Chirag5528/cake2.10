@@ -33,6 +33,7 @@
  * ...and connect the rest of 'Pages' controller's URLs.
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+	Router::connect('/captcha-handler', array('plugin' => 'BotDetect','controller' => 'CaptchaHandler', 'action' => 'index'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on

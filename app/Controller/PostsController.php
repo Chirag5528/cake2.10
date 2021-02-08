@@ -1,16 +1,13 @@
 <?php
+
 class PostsController extends AppController{
 
-	public $components = array('Flash','Security' => array(
-		'csrfExpires' => '+1 hour'
-	),);
 	public $helpers = array('Html','Form','Flash');
 
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
-		$this->Security->csrfExpires = '+1 hour';
-		$this->Security->unlockedActions = array('edit');
+		$this->Security->csrfCheck = false;
 	}
 
 	public function index(){
@@ -39,11 +36,34 @@ class PostsController extends AppController{
 		if( $this->request->is('post') ){
 			$post = $this->Post;
 			$post->create();
-			if( $post->save( $this->request->data ) ){
+			if( $post->save($this->request->data,false) ){
 				$this->Flash->success( __('Your post was submitted successfully') );
 				return $this->redirect(array('action'=>'index'));
+			}else{
+				var_dump($this->Post->getDataSource()->showLog());
+
+				$this->Flash->error(__('Unable to add your post'));
 			}
-			$this->Flash->error(__('Unable to add your post'));
+
+			/*$isHuman = captcha_validate($this->request->data['Post']['CaptchaCode']);
+
+			// clear previous user input, since each Captcha code can only be validated once
+			unset($this->request->data['Post']['CaptchaCode']);
+
+			if ($isHuman) {
+				$post = $this->Post;
+				$post->create();
+				if( $post->save( $this->request->data['Post'] ) ){
+					$this->Flash->success( __('Your post was submitted successfully') );
+					return $this->redirect(array('action'=>'index'));
+				}else{
+					die;
+					$this->Flash->error(__('Unable to add your post'));
+				}
+			}else{
+				$this->Flash->error(__('Captcha Verification Failed'));
+			}*/
+
 		}
 	}
 
@@ -72,10 +92,10 @@ class PostsController extends AppController{
 	}
 
 	public function delete($id = null){
+
 		if( $this->request->is('get') ){
 			throw new MethodNotAllowedException(__("Method Not Allowed"));
 		}
-
 		if( ! $this->Post->delete($id) ){
 			$this->Flash->error(__('Unable to delete the post'));
 		}
