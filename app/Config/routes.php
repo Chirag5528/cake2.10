@@ -19,17 +19,21 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
- 
+
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-	Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
+	Router::connect('/', array('controller' => 'posts', 'action' => 'index'));
+
+//	Router::connect('/posts/add', array('controller' => 'posts', 'action' => 'add'));
+//	Router::connect('/posts/edit', array('controller' => 'posts', 'action' => 'edit'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+	Router::connect('/captcha-handler', array('plugin' => 'BotDetect','controller' => 'CaptchaHandler', 'action' => 'index'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on

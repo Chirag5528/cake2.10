@@ -30,4 +30,29 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+
+	public function beforeSave($options = array())
+	{
+		foreach( array_keys( $this->data[$this->alias] ) as $keys ){
+			if(!empty($this->data[$this->alias][$keys]))
+			{
+				$this->data[$this->alias][$keys] = htmlspecialchars( htmlentities( strip_tags($this->data[$this->alias][$keys]) ) );
+			}
+		}
+		return parent::beforeSave($options);
+	}
+	public $validate = array(
+		'CaptchaCode' => array(
+			'rule' => 'checkIsCaptchaValid',
+			'message' => 'Please retype the characters from the picture'
+		)
+	);
+
+	// simply return the Captcha validation status
+	public function checkIsCaptchaValid($check) {
+		$value = array_values($check);
+		$value = $value[0];
+		return captcha_validate($value);
+	}
+
 }

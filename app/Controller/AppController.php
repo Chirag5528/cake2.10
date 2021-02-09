@@ -20,7 +20,7 @@
  */
 
 App::uses('Controller', 'Controller');
-
+//App::import('Sanitize');
 /**
  * Application Controller
  *
@@ -30,5 +30,44 @@ App::uses('Controller', 'Controller');
  * @package		app.Controller
  * @link		https://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
+
 class AppController extends Controller {
+
+	public function initialize()
+	{
+		parent::initialize();
+
+		// load the Captcha component and set its parameter
+
+	}
+
+	public $components = array(
+		'Flash',
+		'Security' => array(
+			'csrfExpires' => '+1 hour'
+		),
+		'BotDetect.Captcha' => array(
+			'captchaConfig' => 'ExampleCaptcha'
+		),
+		'Auth' => array(
+			'loginAction' => array(
+				'controller' => 'users',
+				'action' => 'login',
+			),
+			'loginRedirect' => array(
+				'controller' => 'users',
+				'action' => 'index'
+			),
+			'authError' => 'Sorry, but you are not allowed to view this page.',
+			'authenticate' => array(
+				'Form' => array(
+					'fields' => array(
+						'username' => 'email',
+						'password' => 'password'
+					)
+				)
+			)
+		)
+	);
+
 }
