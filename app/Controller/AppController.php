@@ -49,6 +49,25 @@ class AppController extends Controller {
 		'BotDetect.Captcha' => array(
 			'captchaConfig' => 'ExampleCaptcha'
 		),
+		'Auth' => array(
+			'loginAction' => array(
+				'controller' => 'users',
+				'action' => 'login',
+			),
+			'loginRedirect' => array(
+				'controller' => 'users',
+				'action' => 'index'
+			),
+			'authError' => 'Sorry, but you are not allowed to view this page.',
+			'authenticate' => array(
+				'Form' => array(
+					'fields' => array(
+						'username' => 'email',
+						'password' => 'password'
+					)
+				)
+			)
+		)
 	);
 
 }

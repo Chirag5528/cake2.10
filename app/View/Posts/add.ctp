@@ -13,12 +13,6 @@ echo $this->Form->input('CaptchaCode', array(
 	'class' => 'px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-16',
 ));
 
-$this->Form->unlockField('BDC_UserSpecifiedCaptchaId');
-$this->Form->unlockField('BDC_VCID_ExampleCaptcha');
-$this->Form->unlockField('BDC_BackWorkaround_ExampleCaptcha');
-$this->Form->unlockField('BDC_Hs_ExampleCaptcha');
-$this->Form->unlockField('BDC_SP_ExampleCaptcha');
-
 $options = array(
 		'label' => "Submit",
 		'class' => 'bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 cursor-pointer',

@@ -55,13 +55,4 @@ class AppModel extends Model {
 		return captcha_validate($value);
 	}
 
-	public function schema($field = false) {
-		return array (
-			'name' => array('type' => 'string', 'length' => 64),
-			'email' => array('type' => 'string', 'length' => 64),
-			'message' => array('type' => 'text', 'length' => 256),
-			'subject' => array('type' => 'string', 'length' => 128),
-		);
-	}
-
 }

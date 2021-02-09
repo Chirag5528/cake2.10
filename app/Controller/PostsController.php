@@ -7,7 +7,11 @@ class PostsController extends AppController{
 	public function beforeFilter()
 	{
 		parent::beforeFilter();
-		$this->Security->csrfCheck = false;
+		$this->Security->unlockedFields = array(
+			'BDC_UserSpecifiedCaptchaId','BDC_VCID_ExampleCaptcha',
+			'BDC_BackWorkaround_ExampleCaptcha','BDC_Hs_ExampleCaptcha',
+			'BDC_SP_ExampleCaptcha'
+		);
 	}
 
 	public function index(){
@@ -34,18 +38,11 @@ class PostsController extends AppController{
 	public function add(){
 
 		if( $this->request->is('post') ){
-			$post = $this->Post;
-			$post->create();
-			if( $post->save($this->request->data,false) ){
-				$this->Flash->success( __('Your post was submitted successfully') );
-				return $this->redirect(array('action'=>'index'));
-			}else{
-				var_dump($this->Post->getDataSource()->showLog());
-
-				$this->Flash->error(__('Unable to add your post'));
+			if( ! $this->Post->validates() ){
+				$this->Flash->error(__($this->Post->validationErrors));
 			}
 
-			/*$isHuman = captcha_validate($this->request->data['Post']['CaptchaCode']);
+			$isHuman = captcha_validate($this->request->data['Post']['CaptchaCode']);
 
 			// clear previous user input, since each Captcha code can only be validated once
 			unset($this->request->data['Post']['CaptchaCode']);
@@ -53,17 +50,15 @@ class PostsController extends AppController{
 			if ($isHuman) {
 				$post = $this->Post;
 				$post->create();
-				if( $post->save( $this->request->data['Post'] ) ){
+				if( $post->save($this->request->data,false) ){
 					$this->Flash->success( __('Your post was submitted successfully') );
 					return $this->redirect(array('action'=>'index'));
 				}else{
-					die;
 					$this->Flash->error(__('Unable to add your post'));
 				}
 			}else{
 				$this->Flash->error(__('Captcha Verification Failed'));
-			}*/
-
+			}
 		}
 	}
 
